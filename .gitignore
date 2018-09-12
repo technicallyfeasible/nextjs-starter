@@ -1,0 +1,9 @@
+.idea
+.vscode
+.next
+.DS_Store
+node_modules
+xunit.xml
+*.log
+*.codekit
+*.desc
