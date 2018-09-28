@@ -6,7 +6,7 @@ module.exports = withTypescript(withSass(
     cssModules: true,
     cssLoaderOptions: {
       importLoaders: 2,
-      localIdentName: "[local]",  // this is so bootstrap works
+      localIdentName: '[local]-[hash:base64:5]',
       camelCase: 'dashesOnly',
     },
   }

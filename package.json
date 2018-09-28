@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --files src/server/server.ts",
+    "dev": "ts-node-dev --ignore-watch .next --files src/server/server.ts",
     "build": "next build",
     "start": "env NODE_ENV=production ts-node --files src/server/server.ts"
   },
@@ -38,5 +38,8 @@
     "postcss-loader": "^3.0.0",
     "tslint": "^5.11.0",
     "tslint-react": "^3.6.0"
+  },
+  "resolutions": {
+    "@babel/preset-typescript": "7.0.0-beta.46"
   }
 }
