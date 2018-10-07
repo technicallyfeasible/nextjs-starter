@@ -15,7 +15,7 @@ interface IndexProps {
   dec: () => void;
 }
 
-const index = (props: IndexProps) => {
+export const IndexPage = (props: IndexProps) => {
   const { count, inc, dec } = props;
 
   return (
@@ -42,4 +42,4 @@ export default connect(
     count: selectCount(state),
   }),
   dispatch => bindActionCreators(counterActions, dispatch),
-)(index);
+)(IndexPage);

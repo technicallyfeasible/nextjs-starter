@@ -5,6 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --ignore-watch .next --files src/server/server.ts",
+    "test": "env NODE_ENV=test jest --runInBand",
+    "test:watch": "env NODE_ENV=test jest --watchAll --runInBand",
+    "test:build": "env NODE_ENV=test JEST_SUITE_NAME=Project JEST_JUNIT_OUTPUT=./xunit.xml jest --coverage --runInBand --reporters=jest-junit",
     "build": "next build",
     "start": "env NODE_ENV=production ts-node --files src/server/server.ts"
   },
@@ -30,12 +33,24 @@
     "typescript": "^3.0.3"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.1.14",
+    "@types/enzyme-adapter-react-16": "^1.0.3",
     "@types/express": "^4.16.0",
+    "@types/jest": "^23.3.3",
+    "@types/lodash": "^4.14.116",
     "@types/next": "^6.1.4",
     "@types/react": "^16.4.14",
     "@types/react-redux": "^6.0.8",
     "@types/reactstrap": "^6.0.3",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "jest": "^23.6.0",
+    "jest-environment-jsdom": "^23.4.0",
+    "jest-environment-jsdom-global": "^1.1.0",
+    "jest-enzyme": "^6.1.2",
+    "jest-junit": "^5.2.0",
     "postcss-loader": "^3.0.0",
+    "ts-jest": "^23.10.3",
     "tslint": "^5.11.0",
     "tslint-react": "^3.6.0"
   },

@@ -1,3 +1,4 @@
+/* tslint:disable:no-console */
 import { Request, Response } from 'express';
 import express = require('express');
 import next = require('next');
@@ -26,5 +27,11 @@ app.prepare()
     server.use('/api', api);
 
     server.get('*', (req: Request, res: Response) => handle(req, res));
-    server.listen(port);
+    const httpServer = server.listen(port, (err: Error) => {
+      if (err) {
+        console.error(`Error listening on port ${port}: ${err.message}`);
+        return;
+      }
+      console.log(`Server listening on ${JSON.stringify(httpServer.address())}`);
+    });
   });

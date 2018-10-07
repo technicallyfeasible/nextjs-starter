@@ -1,20 +1,22 @@
 import React from 'react';
 import { Store } from 'redux';
-import { NextContext, NextSFC } from 'next';
+import { NextContext } from 'next';
+import App, { AppComponentContext, AppProps } from 'next/app';
+import { DefaultQuery } from 'next/router';
+import { isFunction } from 'lodash';
 
-import { AppComponentContext } from '../../node_modules/@types/next/app';
 import { initializeStore } from './store';
 
-export interface AppProps {
+export interface ReduxAppProps extends AppProps {
   reduxStore: Store;
   initialReduxState: any;
 }
 
-interface AppComponentContextRedux<Q = any> extends AppComponentContext<Q> {
+interface AppComponentContextRedux<Q extends DefaultQuery = DefaultQuery> extends AppComponentContext {
   ctx: ReduxContext<Q>;
 }
 
-interface ReduxContext<Q> extends NextContext<Q> {
+interface ReduxContext<Q extends DefaultQuery = DefaultQuery> extends NextContext<Q> {
   reduxStore: Store;
 }
 
@@ -22,7 +24,7 @@ const isServer = typeof window === 'undefined';
 
 let currentStore: Store;
 
-function getOrCreateStore(initialState?: any) {
+export function getOrCreateStore(initialState?: any) {
   // Always make a new store if server, otherwise state is shared between requests
   if (isServer) {
     return initializeStore(initialState);
@@ -35,8 +37,8 @@ function getOrCreateStore(initialState?: any) {
   return currentStore;
 }
 
-export default (App: NextSFC<AppProps>) => {
-  return class AppWithRedux extends React.Component<AppProps> {
+export default (AppComponent: typeof App): React.ComponentClass<AppProps> => {
+  return class AppWithRedux extends React.Component<ReduxAppProps> {
     private reduxStore: any;
 
     public static async getInitialProps(appContext: AppComponentContextRedux) {
@@ -48,8 +50,8 @@ export default (App: NextSFC<AppProps>) => {
       appContext.ctx.reduxStore = reduxStore;
 
       let appProps = {};
-      if (typeof App.getInitialProps === 'function') {
-        appProps = await App.getInitialProps.call(App, appContext);
+      if (isFunction(AppComponent.getInitialProps)) {
+        appProps = await AppComponent.getInitialProps.call(AppComponent, appContext);
       }
 
       return {
@@ -58,13 +60,13 @@ export default (App: NextSFC<AppProps>) => {
       };
     }
 
-    constructor(props: AppProps) {
+    constructor(props: ReduxAppProps) {
       super(props);
       this.reduxStore = getOrCreateStore(props.initialReduxState);
     }
 
     public render() {
-      return <App {...this.props} reduxStore={this.reduxStore} />;
+      return <AppComponent {...this.props} reduxStore={this.reduxStore} />;
     }
   };
 };

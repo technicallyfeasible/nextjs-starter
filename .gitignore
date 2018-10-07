@@ -1,9 +1,15 @@
+# IDE
 .idea
 .vscode
-.next
+
+# misc
 .DS_Store
-node_modules
-xunit.xml
-*.log
 *.codekit
 *.desc
+
+# build output
+.next
+/node_modules
+xunit.xml
+*.log
+/coverage

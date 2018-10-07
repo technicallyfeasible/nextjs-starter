@@ -3,9 +3,9 @@ import React from 'react';
 import { Provider } from 'react-redux';
 
 import '../src/scss/main.scss';
-import withReduxStore, { AppProps } from '../src/redux/with-redux-store';
+import withReduxStore, { ReduxAppProps } from '../src/redux/with-redux-store';
 
-class MyApp extends App<AppProps> {
+class MyApp extends App<ReduxAppProps> {
   public render() {
     const { Component, pageProps, reduxStore } = this.props;
 
